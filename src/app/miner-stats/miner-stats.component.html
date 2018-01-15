@@ -1,0 +1,11 @@
+﻿<clr-datagrid *ngIf="miners">
+    <clr-dg-column>Miner Guid</clr-dg-column>
+    <clr-dg-column>HashRate</clr-dg-column>
+    <clr-dg-column>sharesPerSecond</clr-dg-column>
+
+    <clr-dg-row *ngFor="let miner of miners | async">
+        <clr-dg-cell>{{miner.miner}}</clr-dg-cell>
+        <clr-dg-cell>{{miner.hashrate}}</clr-dg-cell>
+        <clr-dg-cell>{{miner.sharesPerSecond}}</clr-dg-cell>
+    </clr-dg-row>
+</clr-datagrid>

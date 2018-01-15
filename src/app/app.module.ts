@@ -1,4 +1,4 @@
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+﻿import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -8,12 +8,15 @@ import { AppComponent } from './app.component';
 import { ROUTING } from "./app.routing";
 import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
+import { PoolStatsService } from "app/services/pool-stats.service";
+import { MinerStatsComponent } from "app/miner-stats/miner-stats.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         AboutComponent,
-        HomeComponent
+        HomeComponent,
+        MinerStatsComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -23,7 +26,7 @@ import { AboutComponent } from "./about/about.component";
         ClarityModule,
         ROUTING
     ],
-    providers: [],
+    providers: [PoolStatsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

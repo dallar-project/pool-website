@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2016 VMware, Inc. All Rights Reserved.
  * This software is released under MIT license.
  * The full license information can be found in LICENSE in the root directory of this project.
@@ -8,12 +8,15 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AboutComponent } from './about/about.component';
 import { HomeComponent } from './home/home.component';
+import { MinerStatsComponent } from "app/miner-stats/miner-stats.component";
 
 
 export const ROUTES: Routes = [
     {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    {path: 'about', component: AboutComponent}
+    { path: 'about', component: AboutComponent },
+    { path: 'miners', component: MinerStatsComponent
+    }
 ];
 
 export const ROUTING: ModuleWithProviders = RouterModule.forRoot(ROUTES);
