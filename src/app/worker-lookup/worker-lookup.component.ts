@@ -3,6 +3,7 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { MinerStatsService } from "app/services/miner-stats.service";
 import { MinerLookup, MinerStats } from "app/models/miner-stats";
 import { NumKeysPipe, KeyValuePipe, SiPipe } from "app/services/various.pipe"
+import * as moment from 'moment';
 
 @Component({
     styleUrls: ['./worker-lookup.component.scss'],
@@ -13,11 +14,7 @@ export class WorkerLookupComponent implements OnInit {
     lookedUp: boolean;
     minerStats: MinerStats;
 
-    minerChartData:Array<any> = [
-        {data: []},
-    ];
-
-    hashrateChartData:Array<any> = [
+    workerChartData:Array<any> = [
         {data: []},
     ];
 
@@ -32,7 +29,7 @@ export class WorkerLookupComponent implements OnInit {
         }
     ]
 
-    chartLabels:Array<string> = [];
+    chartLabels:Array<string>;
 
     chartOptions:any = {
         responsive: true
@@ -53,7 +50,7 @@ export class WorkerLookupComponent implements OnInit {
         tooltips: {
             callbacks: {
                 label: (tooltipItem, chart) => {
-                    return SiPipe.prototype.transform(this.hashrateChartData[0].data[tooltipItem.index], 6, "H/s");
+                    return SiPipe.prototype.transform(this.workerChartData[tooltipItem.datasetIndex].data[tooltipItem.index], 6, "H/s");
                 }
             }
         }
@@ -82,8 +79,47 @@ export class WorkerLookupComponent implements OnInit {
                     return;
                 }
 
+                let workerNames:Array<string> = [];
 
+                //Get all worker names
+                p.performance24H.forEach(perf=> {
+                    let names = Object.keys(perf.workers);
+                    names.forEach(name=> {
+                        if (workerNames.indexOf(name) === -1) workerNames.push(name);
+                    });
+                });
 
+                //Build worker graph data points
+                //@TODO: I feel like theres a much better and sane way to do this
+                let workerHashData:Array<any> = [];
+                workerNames.forEach(worker=>workerHashData.push({data: [], label: worker}));
+
+                this.chartLabels = [];
+
+                p.performance24H.forEach((perf, perfIndex)=> {
+                    this.chartLabels.push(moment(perf.created).format('HH:MM'));
+                    let names = Object.keys(perf.workers);
+                    names.forEach(name=> {
+                        let index = workerNames.indexOf(name);
+                        if (index === -1) return;
+
+                        workerHashData[index].data.push(perf.workers[name].hashrate);
+                    });
+                    //Make sure we have a data point for every charted worker
+                    //If we don't have a data point, use 0
+                    workerHashData.forEach((worker, workerIndex)=> {
+                        if (worker.data.length <= perfIndex) worker.data.push(0);
+                    })
+                });
+
+                this.workerChartData = workerHashData;
+
+                let clone = JSON.parse(JSON.stringify(this.chartLabels));
+                this.chartLabels = clone;
+
+                console.log(this.chartLabels);
+
+                // Display worker stats
                 this.lookedUp = true;
             });
         }
