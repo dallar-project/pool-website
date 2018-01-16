@@ -11,7 +11,7 @@ export class MinerStats {
        public totalPaid: Number,
        public lastPayment: Date,
        public performance: IMinerPerformanceStat,
-       public performanceHistory: IMinerPerformanceStat[],
+       public performance24H: IMinerPerformanceStat[],
     ) {}
 
     static fromEmpty():MinerStats {

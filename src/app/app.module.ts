@@ -14,6 +14,7 @@ import { WorkerLookupComponent } from "app/worker-lookup/worker-lookup.component
 import { PoolStatsComponent } from "app/pool-stats/pool-stats.component";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { MinerStatsService } from "app/services/miner-stats.service";
+import { NumKeysPipe } from "app/services/numkeys.pipe";
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { MinerStatsService } from "app/services/miner-stats.service";
         HomeComponent,
         TopMinerStatsComponent,
         WorkerLookupComponent,
-        PoolStatsComponent
+        PoolStatsComponent,
+        NumKeysPipe
     ],
     imports: [
         BrowserAnimationsModule,

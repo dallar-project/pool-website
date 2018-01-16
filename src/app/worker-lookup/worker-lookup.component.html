@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">Enter A Worker Address</div>
             <div class="card-block">
-                <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
+                <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()">
                     <section class="form-block">
                         <div class="form-group">
                             <label for="workerAddress" class="required">Worker Address</label>
@@ -14,7 +14,7 @@
                                 <input type="text" id="workerAddress" placeholder="DSPb2CANNBmCpPLmptnG9Ran31zBLK6JfD"
                                     required
                                     size="50"
-                                    name="address"
+                                    name="workerAddress"
                                     [(ngModel)]="lookupModel.address">
                                 <span class="tooltip-content">
                                     You should enter the address of the worker you want to look up information for here.
@@ -32,6 +32,53 @@
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">Stats for Worker Address: {{lookupModel.address}}</div>
+            <div class="card-block">
+                <form #workerResetForm="ngForm" (ngSubmit)="onResetSubmit()" [hidden]="submitted">
+                    <section class="form-block">
+                        <button class="btn btn-primary" type="submit" [disabled]="workerLookupForm.form.invalid">Reset Lookup</button>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Total Paid</div>
+            <div class="card-block">
+                <div class="card-title">{{minerStats.totalPaid}} DAL</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Miner Count</div>
+            <div class="card-block">
+                <div class="card-title">{{minerStats.performance.workers | numkeys}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">Pending Shares</div>
+                <div class="card-block">
+                    <div class="card-title">{{minerStats.pendingShares}}</div>
+                </div>
+            </div>
+        </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Last Payment Time</div>
+            <div class="card-block">
+                <div class="card-title">{{minerStats.lastPayment | date:'medium'}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Last Update Time</div>
+            <div class="card-block">
+                <div class="card-title">{{minerStats.performance.created | date:'medium'}}</div>
+            </div>
         </div>
     </div>
 </div>
