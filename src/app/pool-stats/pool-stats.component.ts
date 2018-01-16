@@ -4,6 +4,7 @@ import { Observable } from "rxjs/Observable";
 import { PoolStats } from "app/models/pool-stats";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { IPoolPerformanceStat } from "app/models/ipoolperformancestat";
+import { SiPipe } from "app/services/various.pipe";
 import * as moment from 'moment';
 
 @Component({
@@ -54,7 +55,7 @@ export class PoolStatsComponent implements OnInit {
                 ticks: {
                     // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
-                        return PoolStatsService.toSI(value, 1, "H/s");
+                        return SiPipe.prototype.transform(value, 1, "H/s");
                     }
                 }
             }]
@@ -62,7 +63,7 @@ export class PoolStatsComponent implements OnInit {
         tooltips: {
             callbacks: {
                 label: (tooltipItem, chart) => {
-                    return PoolStatsService.toSI(this.hashrateChartData[0].data[tooltipItem.index], 6, "H/s");
+                    return SiPipe.prototype.transform(this.hashrateChartData[0].data[tooltipItem.index], 6, "H/s");
                 }
             }
         }
@@ -106,11 +107,11 @@ export class PoolStatsComponent implements OnInit {
 
             // Update peaks
             this.peakMiners = minerPeak;
-            this.peakHashRate = PoolStatsService.toSI(hashPeak, 6, 'H/s');
+            this.peakHashRate = SiPipe.prototype.transform(hashPeak, 6, 'H/s');
 
             // Update sums
             this.avgMiners = Math.floor(minerSum / this.poolPerformanceStats.length);
-            this.avgHashRate = PoolStatsService.toSI(hashSum / this.poolPerformanceStats.length, 6, 'H/s');
+            this.avgHashRate = SiPipe.prototype.transform(hashSum / this.poolPerformanceStats.length, 6, 'H/s');
         });
     }
 }

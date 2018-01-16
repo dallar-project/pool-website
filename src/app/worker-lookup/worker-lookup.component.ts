@@ -13,6 +13,52 @@ export class WorkerLookupComponent implements OnInit {
     lookedUp: boolean;
     minerStats: MinerStats;
 
+    minerChartData:Array<any> = [
+        {data: []},
+    ];
+
+    hashrateChartData:Array<any> = [
+        {data: []},
+    ];
+
+    lineChartColors:Array<any> = [
+        { // dallar red
+          backgroundColor: 'rgba(195,20,39,0.5)',
+          borderColor: 'rgba(195,20,39,1)',
+          pointBackgroundColor: 'rgba(195,20,39,1)',
+          pointBorderColor: '#fff',
+          pointHoverBackgroundColor: '#fff',
+          pointHoverBorderColor: 'rgba(195,20,39,0.8)'
+        }
+    ]
+
+    chartLabels:Array<string> = [];
+
+    chartOptions:any = {
+        responsive: true
+    }
+
+    hashrateChartOptions:any = {
+        responsive: true,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return SiPipe.prototype.transform(value, 1, "H/s");
+                    }
+                }
+            }]
+        },
+        tooltips: {
+            callbacks: {
+                label: (tooltipItem, chart) => {
+                    return SiPipe.prototype.transform(this.hashrateChartData[0].data[tooltipItem.index], 6, "H/s");
+                }
+            }
+        }
+    };
+
     constructor(private minerStatsService: MinerStatsService) {
         this.lookupModel = new MinerLookup('');
         this.lookedUp = false;
@@ -35,6 +81,8 @@ export class WorkerLookupComponent implements OnInit {
                     //@TODO: Handle failed lookup
                     return;
                 }
+
+
 
                 this.lookedUp = true;
             });

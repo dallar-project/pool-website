@@ -41,28 +41,6 @@
             </div>
         </div>
     </div>
-    <div class="col-md-12">
-        <div class="card">
-            <!-- @TODO: Make Miners text plural if needed -->
-            <div class="card-header">{{minerStats.performance.workers | numkeys}} Miner(s)</div>
-            <div class="card-block">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Worker Name</th>
-                            <th>Hash Rate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let miner of minerStats.performance.workers | keyvalue">
-                            <td>{{miner.key}}</td>
-                            <td>{{miner.value.hashrate | hashScale | si:6:'H/s'}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
     <div class="col-md-3">
         <div class="card">
             <div class="card-header">Total Paid</div>
@@ -95,4 +73,26 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12">
+            <div class="card">
+                <!-- @TODO: Make Miners text plural if needed -->
+                <div class="card-header">{{minerStats.performance.workers | numkeys}} Miner(s)</div>
+                <div class="card-block">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Worker Name</th>
+                                <th>Hash Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let miner of minerStats.performance.workers | keyvalue">
+                                <td>{{miner.key}}</td>
+                                <td>{{miner.value.hashrate | hashScale | si:6:'H/s'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 </div>
