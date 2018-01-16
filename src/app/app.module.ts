@@ -13,6 +13,7 @@ import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.comp
 import { WorkerLookupComponent } from "app/worker-lookup/worker-lookup.component";
 import { PoolStatsComponent } from "app/pool-stats/pool-stats.component";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { MinerStatsService } from "app/services/miner-stats.service";
 
 @NgModule({
     declarations: [
@@ -32,7 +33,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
         ChartsModule,
         ROUTING
     ],
-    providers: [PoolStatsService],
+    providers: [PoolStatsService, MinerStatsService],
     bootstrap: [AppComponent]
 })
 export class AppModule {

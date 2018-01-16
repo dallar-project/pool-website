@@ -1,9 +1,8 @@
-<div class="row">
+<div class="row" [hidden]="lookedUp">
     <div class="col-xl-12">
         <div class="card">
             <div class="card-header">Enter A Worker Address</div>
             <div class="card-block">
-                <div class="card-title">{{poolStats.connectedMiners}}</div>
                 <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()" [hidden]="submitted">
                     <section class="form-block">
                         <div class="form-group">
@@ -15,9 +14,8 @@
                                 <input type="text" id="workerAddress" placeholder="DSPb2CANNBmCpPLmptnG9Ran31zBLK6JfD"
                                     required
                                     size="50"
-                                    name="workerName"
-                                    [(ngModel)]="model.firstName"
-                                    #workerNameInput="ngModel">
+                                    name="address"
+                                    [(ngModel)]="lookupModel.address">
                                 <span class="tooltip-content">
                                     You should enter the address of the worker you want to look up information for here.
                                 </span>
@@ -27,6 +25,13 @@
                     </section>
                 </form>
             </div>
+        </div>
+    </div>
+</div>
+<div class="row" [hidden]="!lookedUp">
+    <div class="col-xl-12">
+        <div class="card">
+            <div class="card-header">Stats for Worker Address: {{lookupModel.address}}</div>
         </div>
     </div>
 </div>
