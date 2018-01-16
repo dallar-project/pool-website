@@ -4,8 +4,8 @@
             <div class="card-header">Miners</div>
             <div class="card-block">
                 <div class="card-title">{{poolStats.connectedMiners}}</div>
-                <div class="card-text">24 Hour Peak: X</div>
-                <div class="card-text">24 Hour Average: X</div>
+                <div class="card-text">24 Hour Peak: {{peakMiners}}</div>
+                <div class="card-text">24 Hour Average: {{avgMiners}}</div>
             </div>
         </div>
     </div>
@@ -14,8 +14,8 @@
             <div class="card-header">Pool Hash Rate</div>
             <div class="card-block">
                 <div class="card-title">{{poolStats.hashRateFormatted}}</div>
-                <div class="card-text">24 Hour Peak: X</div>
-                <div class="card-text">24 Hour Average: X</div>
+                <div class="card-text">24 Hour Peak: {{peakHashRate}}</div>
+                <div class="card-text">24 Hour Average: {{avgHashRate}}</div>
             </div>
         </div>
     </div>

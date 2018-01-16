@@ -13,6 +13,10 @@ import * as moment from 'moment';
 export class PoolStatsComponent implements OnInit {
     poolStats: PoolStats;
     poolPerformanceStats: IPoolPerformanceStat[];
+    peakMiners: Number;
+    peakHashRate: String;
+    avgMiners: Number;
+    avgHashRate: String;
 
     minerChartData:Array<any> = [
         {data: []},
@@ -76,14 +80,37 @@ export class PoolStatsComponent implements OnInit {
             let minerData = [];
             let hashrateData = [];
             let labels:Array<string> = [];
+            let minerPeak = 0;
+            let hashPeak = 0;
+            let minerSum = 0;
+            let hashSum = 0;
             this.poolPerformanceStats.forEach((stat, index)=> {
+
+                // Build chart data
                 minerData.push(stat.connectedMiners);
                 hashrateData.push(stat.poolHashRate)
                 this.chartLabels.push(moment(stat.created).format('HH:MM'));
+
+                // Get peaks
+                if (stat.connectedMiners > minerPeak) minerPeak = stat.connectedMiners;
+                if (stat.poolHashRate > hashPeak) hashPeak = stat.poolHashRate;
+
+                // Build sums for averaging
+                minerSum += stat.connectedMiners;
+                hashSum += stat.poolHashRate;
             })
-            
+
+            // Update chart data
             this.minerChartData = [{data: minerData, label: "Miners"}];
-            this.hashrateChartData = [{data: hashrateData, label: "Hash Rate"}];            
+            this.hashrateChartData = [{data: hashrateData, label: "Hash Rate"}];
+
+            // Update peaks
+            this.peakMiners = minerPeak;
+            this.peakHashRate = PoolStatsService.toSI(hashPeak, 6, 'H/s');
+
+            // Update sums
+            this.avgMiners = Math.floor(minerSum / this.poolPerformanceStats.length);
+            this.avgHashRate = PoolStatsService.toSI(hashSum / this.poolPerformanceStats.length, 6, 'H/s');
         });
     }
 }
