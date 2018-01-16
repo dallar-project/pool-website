@@ -1,5 +1,5 @@
 ﻿export const environment = {
-    production: true,
+    production: false,
     poolApi: "http://pool.dallar.org:4000/api/",
     poolId: "dallar",
     poolHashRateScale: 0.00390625

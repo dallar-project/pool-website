@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 import { PoolStats, PoolPortInfo, PoolPaymentProcessing, NetworkStats, TopMinerStats } from "../models/pool-stats";
 import { environment } from "environments/environment";
 import { IMiner } from "app/models/iminer";
+import { IPoolPerformanceStat } from "app/models/ipoolperformancestat";
 
 @Injectable()
 export class PoolStatsService {
@@ -11,7 +12,7 @@ export class PoolStatsService {
     }
 
     // https://github.com/calvintam236/miningcore-ui/blob/develop/assets/js/miningcore-ui.js
-    toSI(value, decimal, unit): string {
+    static toSI(value, decimal, unit): string {
         if (value === 0) {
             return '0 ' + unit;
         } else {
@@ -65,9 +66,9 @@ export class PoolStatsService {
 
                 let networkStats = new NetworkStats(
                     data.pool.networkStats.networkHashRate,
+                    PoolStatsService.toSI(data.pool.networkStats.networkHashRate, 6, 'H/s'),
                     data.pool.networkStats.networkDifficulty,
                     data.pool.networkStats.lastNetworkBlockTime,
-                    //new Date(),
                     data.pool.networkStats.blockHeight,
                     data.pool.networkStats.connectedPeers
                 );
@@ -87,7 +88,8 @@ export class PoolStatsService {
                     data.pool.blockRefreshInterval,
                     data.pool.poolFeePercent,
                     data.pool.poolStats.connectedMiners,
-                    data.pool.poolStats.poolHashRate,
+                    data.pool.poolStats.poolHashRate * environment.poolHashRateScale,
+                    PoolStatsService.toSI(data.pool.poolStats.poolHashRate * environment.poolHashRateScale, 6, 'H/s'),
                     data.pool.poolStats.validSharesPerSecond,
                     networkStats,
                     topMiners
@@ -96,12 +98,29 @@ export class PoolStatsService {
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    getMiners(): Observable<IMiner[]> {
+    getTopMiners(): Observable<IMiner[]> {
         return this.http.get(`${environment.poolApi}pools/${environment.poolId}/miners`)
             .map((res: Response) => {
-                const data = res.json();
+                let data = res.json();
+                data.forEach(miner => {
+                    miner.hashrate *= environment.poolHashRateScale;
+                    miner.hashrateFormatted = PoolStatsService.toSI(miner.hashrate, 6, 'H/s');
+                });
                 return data as IMiner[];
             })
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
+    }
+
+    getPoolPerformance(): Observable<IPoolPerformanceStat[]> {
+        return this.http.get(`${environment.poolApi}pools/${environment.poolId}/performance`)
+        .map((res: Response) => {
+            let data = res.json().stats;
+            data.forEach(stat => {
+                stat.poolHashRate *= environment.poolHashRateScale;
+                stat.poolHashRateFormatted = PoolStatsService.toSI(stat.poolHashRate, 6, 'H/s');
+            });
+            return data as IPoolPerformanceStat[];
+        })
+        .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 }

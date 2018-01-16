@@ -4,10 +4,10 @@ import { IMiner } from "app/models/iminer";
 import { Observable } from "rxjs/Observable";
 
 @Component({
-    templateUrl: './miner-stats.component.html',
+    templateUrl: './top-miner-stats.component.html',
 })
 
-export class MinerStatsComponent {
+export class TopMinerStatsComponent {
     miners: Observable<IMiner[]>;
 
     constructor(private poolStatsService: PoolStatsService) {
@@ -15,6 +15,6 @@ export class MinerStatsComponent {
     }
 
     loadData() {
-        this.miners = this.poolStatsService.getMiners();
+        this.miners = this.poolStatsService.getTopMiners();
     }
 }

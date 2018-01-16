@@ -10,10 +10,17 @@ export class PoolStats {
        public poolFeePercent: number,
        public connectedMiners: number,
        public hashRate: number,
+       public hashRateFormatted: string,
        public validSharesPerSecond: number,
        public networkStats: NetworkStats,
        public topMiners: TopMinerStats[]
     ) {}
+
+    static fromEmpty():PoolStats {
+        return new PoolStats(
+            '', '' , [] , new PoolPaymentProcessing(false, 0, '', 0), 0, 0, 0, 0, 0, 0, '', 0, new NetworkStats(0, '', 0, new Date(), 0, 0), []
+        );
+    }
 }
 
 export class PoolPortInfo {
@@ -41,6 +48,7 @@ export class PoolPaymentProcessing {
 export class NetworkStats {
     constructor(
         public hashRate: number,
+        public hashRateFormatted: string,
         public difficulty: number,
         public lastBlockTime: Date,
         public blockHeight: number,

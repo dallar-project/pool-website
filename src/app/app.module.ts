@@ -9,14 +9,17 @@ import { ROUTING } from "./app.routing";
 import { HomeComponent } from "./home/home.component";
 import { AboutComponent } from "./about/about.component";
 import { PoolStatsService } from "app/services/pool-stats.service";
-import { MinerStatsComponent } from "app/miner-stats/miner-stats.component";
+import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.component";
+import { PoolStatsComponent } from "app/pool-stats/pool-stats.component";
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 @NgModule({
     declarations: [
         AppComponent,
         AboutComponent,
         HomeComponent,
-        MinerStatsComponent
+        TopMinerStatsComponent,
+        PoolStatsComponent
     ],
     imports: [
         BrowserAnimationsModule,
@@ -24,6 +27,7 @@ import { MinerStatsComponent } from "app/miner-stats/miner-stats.component";
         FormsModule,
         HttpModule,
         ClarityModule,
+        ChartsModule,
         ROUTING
     ],
     providers: [PoolStatsService],

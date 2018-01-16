@@ -6,16 +6,16 @@
 import { ModuleWithProviders } from '@angular/core/src/metadata/ng_module';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AboutComponent } from './about/about.component';
+import { PoolStatsComponent } from './pool-stats/pool-stats.component';
 import { HomeComponent } from './home/home.component';
-import { MinerStatsComponent } from "app/miner-stats/miner-stats.component";
+import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.component";
 
 
 export const ROUTES: Routes = [
-    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '', redirectTo: 'pool-stats', pathMatch: 'full'},
     {path: 'home', component: HomeComponent},
-    { path: 'about', component: AboutComponent },
-    { path: 'miners', component: MinerStatsComponent
+    {path: 'pool-stats', component: PoolStatsComponent },
+    {path: 'top-miners', component: TopMinerStatsComponent
     }
 ];
 

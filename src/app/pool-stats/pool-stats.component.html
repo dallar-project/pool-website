@@ -1,0 +1,78 @@
+﻿<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Miners</div>
+            <div class="card-block">
+                <div class="card-title">{{poolStats.connectedMiners}}</div>
+                <div class="card-text">24 Hour Peak: X</div>
+                <div class="card-text">24 Hour Average: X</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">Pool Hash Rate</div>
+            <div class="card-block">
+                <div class="card-title">{{poolStats.hashRateFormatted}}</div>
+                <div class="card-text">24 Hour Peak: X</div>
+                <div class="card-text">24 Hour Average: X</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Network Difficulty</div>
+            <div class="card-block">
+                <div class="card-title">{{poolStats.networkStats.difficulty}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Network Block Height</div>
+            <div class="card-block">
+                <div class="card-title">{{poolStats.networkStats.blockHeight}}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">Estimated Network Hashrate</div>
+            <div class="card-block">
+                <div class="card-title">{{poolStats.networkStats.hashRateFormatted}}</div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">Past 24 Hour Miner Count</div>
+            <div class="card-block">
+                <canvas baseChart
+                    [chartType]="'line'"
+                    [data]="minerChartData"
+                    [labels]="chartLabels"
+                    [options]="chartOptions"
+                    [legend]="false"
+                    [colors]="lineChartColors"
+                ></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6">
+            <div class="card">
+                <div class="card-header">Past 24 Hour Pool Hash Rate</div>
+                <div class="card-block">
+                    <canvas baseChart
+                        [chartType]="'line'"
+                        [data]="hashrateChartData"
+                        [labels]="chartLabels"
+                        [options]="hashrateChartOptions"
+                        [legend]="false"
+                        [colors]="lineChartColors"
+                    ></canvas>
+                </div>
+            </div>
+        </div>
+</div>
