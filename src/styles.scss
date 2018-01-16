@@ -7,5 +7,16 @@
 // Clarity Component SCSS
 @import "../node_modules/@clr/ui/src/utils/components.clarity";
 
+// Mobile header 'Poo' fix
+@media screen and (max-width: map-get($clr-breakpoints, small)) {
+    .main-container {
 
-
+        .header {
+            .branding {
+                max-width: 6.5rem;
+                min-width: 0;
+                overflow: hidden;
+            }
+        }
+    }
+}
