@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { MinerStatsService } from "app/services/miner-stats.service";
 import { MinerLookup, MinerStats } from "app/models/miner-stats";
-import { NumKeysPipe } from "app/services/numkeys.pipe"
+import { NumKeysPipe, KeyValuePipe, SiPipe } from "app/services/various.pipe"
 
 @Component({
     styleUrls: ['./worker-lookup.component.scss'],

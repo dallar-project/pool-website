@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-header">Enter A Worker Address</div>
             <div class="card-block">
-                <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()">
+                <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()" class="compact">
                     <section class="form-block">
                         <div class="form-group">
                             <label for="workerAddress" class="required">Worker Address</label>
@@ -33,7 +33,7 @@
         <div class="card">
             <div class="card-header">Stats for Worker Address: {{lookupModel.address}}</div>
             <div class="card-block">
-                <form #workerResetForm="ngForm" (ngSubmit)="onResetSubmit()" [hidden]="submitted">
+                <form #workerResetForm="ngForm" (ngSubmit)="onResetSubmit()" class="compact">
                     <section class="form-block">
                         <button class="btn btn-primary" type="submit" [disabled]="workerLookupForm.form.invalid">Reset Lookup</button>
                     </section>
@@ -41,7 +41,29 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-12">
+        <div class="card">
+            <!-- @TODO: Make Miners text plural if needed -->
+            <div class="card-header">{{minerStats.performance.workers | numkeys}} Miner(s)</div>
+            <div class="card-block">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Worker Name</th>
+                            <th>Hash Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let miner of minerStats.performance.workers | keyvalue">
+                            <td>{{miner.key}}</td>
+                            <td>{{miner.value.hashrate | hashScale | si:6:'H/s'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
         <div class="card">
             <div class="card-header">Total Paid</div>
             <div class="card-block">
@@ -49,15 +71,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="card">
-            <div class="card-header">Miner Count</div>
-            <div class="card-block">
-                <div class="card-title">{{minerStats.performance.workers | numkeys}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
             <div class="card">
                 <div class="card-header">Pending Shares</div>
                 <div class="card-block">
@@ -65,7 +79,7 @@
                 </div>
             </div>
         </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-header">Last Payment Time</div>
             <div class="card-block">
@@ -73,7 +87,7 @@
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="card">
             <div class="card-header">Last Update Time</div>
             <div class="card-block">

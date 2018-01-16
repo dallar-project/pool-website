@@ -14,7 +14,7 @@ import { WorkerLookupComponent } from "app/worker-lookup/worker-lookup.component
 import { PoolStatsComponent } from "app/pool-stats/pool-stats.component";
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { MinerStatsService } from "app/services/miner-stats.service";
-import { NumKeysPipe } from "app/services/numkeys.pipe";
+import { NumKeysPipe, KeyValuePipe, SiPipe, HashRateScalePipe } from "app/services/various.pipe";
 
 @NgModule({
     declarations: [
@@ -24,7 +24,10 @@ import { NumKeysPipe } from "app/services/numkeys.pipe";
         TopMinerStatsComponent,
         WorkerLookupComponent,
         PoolStatsComponent,
-        NumKeysPipe
+        NumKeysPipe,
+        KeyValuePipe,
+        SiPipe,
+        HashRateScalePipe
     ],
     imports: [
         BrowserAnimationsModule,
@@ -33,7 +36,7 @@ import { NumKeysPipe } from "app/services/numkeys.pipe";
         HttpModule,
         ClarityModule,
         ChartsModule,
-        ROUTING
+        ROUTING,
     ],
     providers: [PoolStatsService, MinerStatsService],
     bootstrap: [AppComponent]
