@@ -27,10 +27,6 @@ export class PoolStatsComponent implements OnInit {
         {data: []},
     ];
 
-    hashrateScale(value:Number, index:Number, values:any): String {
-        return PoolStatsService.toSI(value, 0, 'H/s');
-    }
-
     lineChartColors:Array<any> = [
         { // dallar red
           backgroundColor: 'rgba(195,20,39,0.5)',
