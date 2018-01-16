@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { MinerStatsService } from "app/services/miner-stats.service";
 import { MinerLookup, MinerStats } from "app/models/miner-stats";
-import { NumKeysPipe, KeyValuePipe, SiPipe } from "app/services/various.pipe"
+import { NumKeysPipe, KeyValuePipe, SiPipe, HashRateScalePipe } from "app/services/various.pipe"
 import * as moment from 'moment';
 
 @Component({
@@ -18,17 +18,6 @@ export class WorkerLookupComponent implements OnInit {
         {data: []},
     ];
 
-    lineChartColors:Array<any> = [
-        { // dallar red
-          backgroundColor: 'rgba(195,20,39,0.5)',
-          borderColor: 'rgba(195,20,39,1)',
-          pointBackgroundColor: 'rgba(195,20,39,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(195,20,39,0.8)'
-        }
-    ]
-
     chartLabels:Array<string>;
 
     chartOptions:any = {
@@ -40,7 +29,6 @@ export class WorkerLookupComponent implements OnInit {
         scales: {
             yAxes: [{
                 ticks: {
-                    // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
                         return SiPipe.prototype.transform(value, 1, "H/s");
                     }
@@ -102,8 +90,7 @@ export class WorkerLookupComponent implements OnInit {
                     names.forEach(name=> {
                         let index = workerNames.indexOf(name);
                         if (index === -1) return;
-
-                        workerHashData[index].data.push(perf.workers[name].hashrate);
+                        workerHashData[index].data.push(HashRateScalePipe.prototype.transform(perf.workers[name].hashrate));
                     });
                     //Make sure we have a data point for every charted worker
                     //If we don't have a data point, use 0
@@ -112,12 +99,8 @@ export class WorkerLookupComponent implements OnInit {
                     })
                 });
 
+                workerHashData.forEach((worker)=>{if (worker.label === '') worker.label = 'Untitled'});
                 this.workerChartData = workerHashData;
-
-                let clone = JSON.parse(JSON.stringify(this.chartLabels));
-                this.chartLabels = clone;
-
-                console.log(this.chartLabels);
 
                 // Display worker stats
                 this.lookedUp = true;

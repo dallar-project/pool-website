@@ -12,7 +12,7 @@ import { PoolStatsService } from "app/services/pool-stats.service";
 import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.component";
 import { WorkerLookupComponent } from "app/worker-lookup/worker-lookup.component";
 import { PoolStatsComponent } from "app/pool-stats/pool-stats.component";
-import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { ChartsModule } from 'ng2-charts-x';
 import { MinerStatsService } from "app/services/miner-stats.service";
 import { NumKeysPipe, KeyValuePipe, SiPipe, HashRateScalePipe } from "app/services/various.pipe";
 

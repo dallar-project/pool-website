@@ -30,6 +30,7 @@
     "moment": "^2.20.1",
     "mutationobserver-shim": "^0.3.2",
     "ng2-charts": "^1.6.0",
+    "ng2-charts-x": "^2.0.6",
     "rxjs": "^5.4.3",
     "ts-helpers": "^1.1.1",
     "web-animations-js": "^2.3.1",

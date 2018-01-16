@@ -49,7 +49,6 @@ export class PoolStatsComponent implements OnInit {
         scales: {
             yAxes: [{
                 ticks: {
-                    // Include a dollar sign in the ticks
                     callback: function(value, index, values) {
                         return SiPipe.prototype.transform(value, 1, "H/s");
                     }
