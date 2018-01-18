@@ -7,18 +7,16 @@ import { ModuleWithProviders } from '@angular/core/src/metadata/ng_module';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PoolStatsComponent } from './pool-stats/pool-stats.component';
-import { HomeComponent } from './home/home.component';
 import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.component";
 import { WorkerLookupComponent } from 'app/worker-lookup/worker-lookup.component';
 
 
 export const ROUTES: Routes = [
     {path: '', redirectTo: 'pool-stats', pathMatch: 'full'},
-    {path: 'home', component: HomeComponent},
     {path: 'pool-stats', component: PoolStatsComponent },
     {path: 'worker-lookup', component: WorkerLookupComponent },
     {path: 'top-miners', component: TopMinerStatsComponent },
-    { path: '**', component: HomeComponent }
+    { path: '**', redirectTo: 'pool-stats', pathMatch: 'full' }
 ];
 
 export const ROUTING: ModuleWithProviders = RouterModule.forRoot(ROUTES);

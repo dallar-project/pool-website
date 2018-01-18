@@ -6,8 +6,6 @@ import { HttpModule } from '@angular/http';
 import { ClarityModule } from '@clr/angular';
 import { AppComponent } from './app.component';
 import { ROUTING } from "./app.routing";
-import { HomeComponent } from "./home/home.component";
-import { AboutComponent } from "./about/about.component";
 import { PoolStatsService } from "app/services/pool-stats.service";
 import { TopMinerStatsComponent } from "app/top-miner-stats/top-miner-stats.component";
 import { WorkerLookupComponent } from "app/worker-lookup/worker-lookup.component";
@@ -19,8 +17,6 @@ import { NumKeysPipe, KeyValuePipe, SiPipe, HashRateScalePipe } from "app/servic
 @NgModule({
     declarations: [
         AppComponent,
-        AboutComponent,
-        HomeComponent,
         TopMinerStatsComponent,
         WorkerLookupComponent,
         PoolStatsComponent,
