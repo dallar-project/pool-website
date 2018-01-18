@@ -37,12 +37,12 @@
     "zone.js": "^0.8.16"
   },
   "devDependencies": {
-    "@angular/cli": "~1.6.1",
+    "@angular/cli": "^1.6.4",
     "@angular/compiler-cli": "~5.0.0",
-    "@types/core-js": "~0.9.42",
+    "@types/core-js": "^0.9.45",
     "@types/jasmine": "^2.5.53",
     "@types/jasminewd2": "^2.0.2",
-    "@types/node": "^8.0.24",
+    "@types/node": "^8.5.9",
     "bootstrap": "4.0.0-alpha.5",
     "codelyzer": "~3.1.2",
     "enhanced-resolve": "~3.4.1",

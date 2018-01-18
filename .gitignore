@@ -8,3 +8,7 @@ typings/
 .idea/
 .DS_Store
 .npmrc
+/.vs/miningcore-ui-clarity/v15/.suo
+/.vs
+/.vs
+package-lock.json

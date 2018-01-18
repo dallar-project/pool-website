@@ -17,7 +17,8 @@ export const ROUTES: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'pool-stats', component: PoolStatsComponent },
     {path: 'worker-lookup', component: WorkerLookupComponent },
-    {path: 'top-miners', component: TopMinerStatsComponent }
+    {path: 'top-miners', component: TopMinerStatsComponent },
+    { path: '**', component: HomeComponent }
 ];
 
 export const ROUTING: ModuleWithProviders = RouterModule.forRoot(ROUTES);
