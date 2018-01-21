@@ -1,83 +1,18 @@
-<div class="row" [hidden]="lookedUp">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header">Enter A Worker Address</div>
-            <div class="card-block">
-                <form #workerLookupForm="ngForm" (ngSubmit)="onSubmit()" class="compact">
-                    <section class="form-block">
-                        <div class="form-group">
-                            <label for="workerAddress" class="required">Worker Address</label>
-                            <label for="workerAddress"
-                                aria-haspopup="true"
-                                role="tooltip"
-                                class="tooltip tooltip-validation tooltip-md ">
-                                <input type="text" id="workerAddress" placeholder="DSPb2CANNBmCpPLmptnG9Ran31zBLK6JfD"
-                                    required
-                                    size="50"
-                                    name="workerAddress"
-                                    [(ngModel)]="lookupModel.address">
-                                <span class="tooltip-content">
-                                    You should enter the address of the worker you want to look up information for here.
-                                </span>
-                            </label>
-                        </div>
-                        <button class="btn btn-primary" type="submit" [disabled]="workerLookupForm.form.invalid">Lookup</button>
-                    </section>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row" [hidden]="!lookedUp">
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header">Stats for Worker Address: {{lookupModel.address}}</div>
-            <div class="card-block">
-                <form #workerResetForm="ngForm" (ngSubmit)="onResetSubmit()" class="compact">
-                    <section class="form-block">
-                        <button class="btn btn-primary" type="submit" [disabled]="workerLookupForm.form.invalid">Reset Lookup</button>
-                    </section>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header">Total Paid</div>
-            <div class="card-block">
-                <div class="card-title">{{minerStats.totalPaid}} DAL</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">Pending Shares</div>
-                <div class="card-block">
-                    <div class="card-title">{{minerStats.pendingShares}}</div>
-                </div>
-            </div>
-        </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header">Last Payment Time</div>
-            <div class="card-block">
-                <div class="card-title">{{minerStats.lastPayment | date:'medium'}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-3">
-        <div class="card">
-            <div class="card-header">Last Update Time</div>
-            <div class="card-block">
-                <div class="card-title">{{minerStats.performance.created | date:'medium'}}</div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12">
-        <div class="card">
-            <!-- @TODO: Make Miners text plural if needed -->
-            <div class="card-header">{{minerStats.performance.workers | numkeys}} Miner(s)</div>
-            <div class="card-block">
+<header class="header-6">
+    <form class="search">
+        <label for="search_input">
+            <input id="search_input" type="text" placeholder="Worker address..." required size="50" name="workerAddress" [(ngModel)]="lookupModel.address"
+                (keyup)="onSubmit()">
+        </label>
+    </form>
+</header>
+
+<div class="card" *ngIf="lookedUp">
+    <div class="card-header">Worker {{validAddress}}</div>
+    <div class="card-block">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>{{minerStats.performance.workers | numkeys}} Miner(s)</h3>
                 <table class="table">
                     <thead>
                         <tr>
@@ -93,18 +28,33 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-    </div>
-    <div class="col-xl-12">
-        <div class="card">
-            <div class="card-header">Past 24 Hour Worker Rates</div>
-            <div class="card-block" ng-if="chartLabels.length > 0">
-                <canvas baseChart
-                    [chartType]="'line'"
-                    [datasets]="workerChartData"
-                    [labels]="chartLabels"
-                    [options]="hashrateChartOptions"
-                ></canvas>
+            <div class="col-md-6">
+                <h3>Stats</h3>
+                <table class="table table-vertical">
+                    <tbody>
+                        <tr>
+                            <th>Total Paid</th>
+                            <td>{{minerStats.totalPaid}} DAL</td>
+                        </tr>
+                        <tr>
+                            <th>Pending Shares</th>
+                            <td>{{minerStats.pendingShares}}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Payment</th>
+                            <td>{{minerStats.lastPayment | date:'medium'}}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Update</th>
+                            <td>{{minerStats.performance.created | date:'medium'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-12">
+                <h3>Past 24 Hour Worker Rates</h3>
+                <canvas *ngIf="chartLabels.length > 0" baseChart [chartType]="'line'" [datasets]="workerChartData" [labels]="chartLabels"
+                    [options]="hashrateChartOptions"></canvas>
             </div>
         </div>
     </div>

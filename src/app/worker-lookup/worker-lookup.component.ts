@@ -13,6 +13,7 @@ export class WorkerLookupComponent implements OnInit {
     lookupModel: MinerLookup;
     lookedUp: boolean;
     minerStats: MinerStats;
+    validAddress: string;
 
     workerChartData:Array<any> = [
         {data: []},
@@ -55,11 +56,12 @@ export class WorkerLookupComponent implements OnInit {
     }
 
     isAddressValid(address: String):boolean {
-        return true;
+        return address.length === 34 && address.substring(0,1) === 'D'; 
     }
 
     onSubmit() {
         if (this.isAddressValid(this.lookupModel.address)) {
+            this.validAddress = this.lookupModel.address;
             this.minerStatsService.getMinerStats(this.lookupModel.address).subscribe(p=>{
                 this.minerStats = p;
                 if (p.performance24H == []) {
