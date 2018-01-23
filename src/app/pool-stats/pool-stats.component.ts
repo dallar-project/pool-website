@@ -6,6 +6,8 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { IPoolPerformanceStat } from "app/models/ipoolperformancestat";
 import { SiPipe } from "app/services/various.pipe";
 import * as moment from 'moment';
+import { Subscription } from "rxjs";
+import { Array } from "core-js/library/web/timers";
 
 @Component({
     templateUrl: './pool-stats.component.html',
@@ -18,38 +20,41 @@ export class PoolStatsComponent implements OnInit {
     peakHashRate: String;
     avgMiners: Number;
     avgHashRate: String;
+    timerCountdown = 30;
+    timerSubscription: Subscription;
+    isRefresh = false;
 
-    minerChartData:Array<any> = [
-        {data: []},
+    minerChartData: Array<any> = [
+        { data: [] },
     ];
 
-    hashrateChartData:Array<any> = [
-        {data: []},
+    hashrateChartData: Array<any> = [
+        { data: [] },
     ];
 
-    lineChartColors:Array<any> = [
+    lineChartColors: Array<any> = [
         { // dallar red
-          backgroundColor: 'rgba(195,20,39,0.5)',
-          borderColor: 'rgba(195,20,39,1)',
-          pointBackgroundColor: 'rgba(195,20,39,1)',
-          pointBorderColor: '#fff',
-          pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(195,20,39,0.8)'
+            backgroundColor: 'rgba(195,20,39,0.5)',
+            borderColor: 'rgba(195,20,39,1)',
+            pointBackgroundColor: 'rgba(195,20,39,1)',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: 'rgba(195,20,39,0.8)'
         }
     ]
 
-    chartLabels:Array<string> = [];
+    chartLabels: Array<string> = [];
 
-    chartOptions:any = {
+    chartOptions: any = {
         responsive: true
     }
 
-    hashrateChartOptions:any = {
+    hashrateChartOptions: any = {
         responsive: true,
         scales: {
             yAxes: [{
                 ticks: {
-                    callback: function(value, index, values) {
+                    callback: function (value, index, values) {
                         return SiPipe.prototype.transform(value, 1, "H/s");
                     }
                 }
@@ -70,21 +75,45 @@ export class PoolStatsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.poolStatsService.getPoolStats().subscribe(p=>this.poolStats=p);
-        this.poolStatsService.getPoolPerformance().subscribe(p=> {
-            this.poolPerformanceStats=p;
+        this.subscribeToTimer();
+        this.loadData();
+    }
+
+    private subscribeToTimer(): void {
+        this.timerSubscription = Observable.interval(5000).subscribe(() => {
+            this.timerCountdown = this.timerCountdown - 5;
+            if (this.timerCountdown === 0) {
+                this.loadData();
+            }
+        });
+    }
+
+    private loadData(){
+        this.poolStatsService.getPoolStats().finally(() => {
+            this.timerCountdown = 30;
+        }).subscribe(p => this.poolStats = p);
+        this.poolStatsService.getPoolPerformance().finally(() => {
+            this.timerCountdown = 30;
+        }).subscribe(p => {
+            this.poolPerformanceStats = p;
             let minerData = [];
             let hashrateData = [];
-            let labels:Array<string> = [];
+            let labels: Array<string> = [];
             let minerPeak = 0;
             let hashPeak = 0;
             let minerSum = 0;
             let hashSum = 0;
-            this.poolPerformanceStats.forEach((stat, index)=> {
+
+            this.poolPerformanceStats.forEach((stat, index) => {
 
                 // Build chart data
                 minerData.push(stat.connectedMiners);
                 hashrateData.push(stat.poolHashRate)
+
+                if(this.isRefresh) {
+                    this.chartLabels.splice(-1,1);
+                }
+
                 this.chartLabels.push(moment(stat.created).format('HH:MM'));
 
                 // Get peaks
@@ -97,8 +126,8 @@ export class PoolStatsComponent implements OnInit {
             })
 
             // Update chart data
-            this.minerChartData = [{data: minerData, label: "Miners"}];
-            this.hashrateChartData = [{data: hashrateData, label: "Hash Rate"}];
+            this.minerChartData = [{ data: minerData, label: "Miners" }];
+            this.hashrateChartData = [{ data: hashrateData, label: "Hash Rate" }];
 
             // Update peaks
             this.peakMiners = minerPeak;
@@ -107,6 +136,8 @@ export class PoolStatsComponent implements OnInit {
             // Update sums
             this.avgMiners = Math.floor(minerSum / this.poolPerformanceStats.length);
             this.avgHashRate = SiPipe.prototype.transform(hashSum / this.poolPerformanceStats.length, 6, 'H/s');
+
+            this.isRefresh = true;
         });
     }
 }

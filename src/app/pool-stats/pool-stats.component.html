@@ -1,4 +1,6 @@
-﻿<div class="row">
+﻿<div style="margin-left:auto; margin-right:0; margin-top:5px; font-size:12px;">
+    <clr-icon shape="clock"></clr-icon> Refresh in {{timerCountdown}} seconds</div>
+<div class="row">
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">Miners</div>
@@ -49,14 +51,8 @@
         <div class="card">
             <div class="card-header">Past 24 Hour Miner Count</div>
             <div class="card-block">
-                <canvas baseChart
-                    [chartType]="'line'"
-                    [data]="minerChartData"
-                    [labels]="chartLabels"
-                    [options]="chartOptions"
-                    [legend]="false"
-                    [colors]="lineChartColors"
-                ></canvas>
+                <canvas baseChart [chartType]="'line'" [data]="minerChartData" [labels]="chartLabels" [options]="chartOptions" [legend]="false"
+                    [colors]="lineChartColors"></canvas>
             </div>
         </div>
     </div>
@@ -64,14 +60,8 @@
         <div class="card">
             <div class="card-header">Past 24 Hour Pool Hash Rate</div>
             <div class="card-block">
-                <canvas baseChart
-                    [chartType]="'line'"
-                    [data]="hashrateChartData"
-                    [labels]="chartLabels"
-                    [options]="hashrateChartOptions"
-                    [legend]="false"
-                    [colors]="lineChartColors"
-                ></canvas>
+                <canvas baseChart [chartType]="'line'" [data]="hashrateChartData" [labels]="chartLabels" [options]="hashrateChartOptions"
+                    [legend]="false" [colors]="lineChartColors"></canvas>
             </div>
         </div>
     </div>
