@@ -49,6 +49,7 @@ export class WorkerLookupComponent implements OnInit {
         this.lookupModel = new MinerLookup('');
         this.lookedUp = false;
         this.minerStats = MinerStats.fromEmpty();
+        this.validAddress = '...';
     }
 
     ngOnInit() {

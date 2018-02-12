@@ -1,16 +1,14 @@
-<header class="header-6">
-    <form class="search">
-        <label for="search_input">
-            <input id="search_input" type="text" placeholder="Worker address..." required size="50" name="workerAddress" [(ngModel)]="lookupModel.address"
-                (keyup)="onSubmit()">
-        </label>
-    </form>
-</header>
-
-<div class="card" *ngIf="lookedUp">
+<div class="card">
+    <div class="card-block">
+        <clr-icon shape="search"></clr-icon>
+        <input id="search_input" type="text" placeholder="Worker address" [(ngModel)]="lookupModel.address" (keyup)="onSubmit()">
+    </div>
+</div>
+<div class="card">
     <div class="card-header">Worker {{validAddress}}</div>
     <div class="card-block">
-        <div class="row">
+        <p *ngIf="!lookedUp">Please enter valid worker address above.</p>
+        <div class="row" *ngIf="lookedUp"> 
             <div class="col-md-6">
                 <h3>{{minerStats.performance.workers | numkeys}} Miner(s)</h3>
                 <table class="table">
