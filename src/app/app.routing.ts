@@ -15,6 +15,7 @@ export const ROUTES: Routes = [
     {path: '', redirectTo: 'pool-stats', pathMatch: 'full'},
     {path: 'pool-stats', component: PoolStatsComponent },
     {path: 'worker-lookup', component: WorkerLookupComponent },
+    {path: 'worker-lookup/:workerId', component: WorkerLookupComponent },
     {path: 'top-miners', component: TopMinerStatsComponent },
     { path: '**', redirectTo: 'pool-stats', pathMatch: 'full' }
 ];

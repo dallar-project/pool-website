@@ -3,6 +3,7 @@ import { OnInit } from "@angular/core/src/metadata/lifecycle_hooks";
 import { MinerStatsService } from "app/services/miner-stats.service";
 import { MinerLookup, MinerStats } from "app/models/miner-stats";
 import { NumKeysPipe, KeyValuePipe, SiPipe, HashRateScalePipe } from "app/services/various.pipe"
+import {ActivatedRoute} from "@angular/router";
 import * as moment from 'moment';
 
 @Component({
@@ -45,19 +46,27 @@ export class WorkerLookupComponent implements OnInit {
         }
     };
 
-    constructor(private minerStatsService: MinerStatsService) {
+    constructor(private minerStatsService: MinerStatsService,
+        private route: ActivatedRoute) {
         this.lookupModel = new MinerLookup('');
         this.lookedUp = false;
         this.minerStats = MinerStats.fromEmpty();
         this.validAddress = '...';
+
+        this.route.params.subscribe( params => {
+            if(params.workerId) {
+                this.lookupModel.address = params.workerId;
+                this.onSubmit();
+            }
+        });
     }
 
     ngOnInit() {
 
     }
 
-    isAddressValid(address: String):boolean {
-        return address.length === 34 && address.substring(0,1) === 'D'; 
+    isAddressValid(address: String): boolean {
+        return address.length === 34 && address.substring(0, 1) === 'D';
     }
 
     onSubmit() {
